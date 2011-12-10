@@ -18,7 +18,11 @@ public class NaT implements Termin {
 
 	@Override
 	public Date datum() {
-		return 
+		return null;
+	}
+	
+	public String toString(){
+		return "NaT";
 	}
 
 }

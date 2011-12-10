@@ -5,17 +5,24 @@ import interfaces.Termin;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 
 
 public class Einleser {
-	public static final String TRENNER = "||";
+	public static final String TRENNER = "\\|\\|";
 	BufferedReader reader;
-	int THEMA = 0;
-	int DATUM = 1;
-	int DAUER = 2;
+	private Map<String, Integer> accessMap = new HashMap<String, Integer>();
+	private List<String> parsedList = new ArrayList<String>();
+	
+	
 	
 	public Einleser(String pfad){
 		try {
@@ -23,37 +30,62 @@ public class Einleser {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		zeilen();
 	}
 	
-	private List<String> zeilen(){
-		List<String> result = new ArrayList<String>();
+	private void zeilen(){
 		String zeile = null;
 		
 		try {
 			while ((zeile = reader.readLine()) != null) {
-				result.add(zeile);
+				String tmp = zeile.replaceAll("\\s\\|\\|\\s", "\\|\\|");
+				parsedList.add(tmp);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return result;
 	}
 	
-	public Termin[] termine(){
+	public Termin[] termine() throws ParseException{
 		List<Termin> result = new ArrayList<Termin>();
-		String firstLine = this.zeilen().get(0);
+		String firstLine = parsedList.get(0);
+		
+		System.out.println(firstLine);
+		
 		String[] init = firstLine.split(TRENNER);
 		
-		
-		for(String elem : this.zeilen()){
-			elem.split(TRENNER);
-			
+		int count = 0;
+		for(String elem : init){
+			System.out.println(elem);
+			accessMap.put(elem, count++);
 		}
+		parsedList.remove(0);
+		
+		System.out.println(accessMap);
+		
+		DateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.US);
+
+		for(String elem : parsedList){
+			String[] line = elem.split(TRENNER);
+
+			Termin t = TerminImpl.create(Integer.parseInt(line[accessMap.get("Dauer")]),
+										 dateFormat.parse(line[accessMap.get("DatumZeit")]),
+										 line[accessMap.get("Thema")]);
+			result.add(t);
+		}
+		return (Termin[]) result.toArray();
+		
 	}
 	
-	public static void main(String args[]){
-		Einleser e = new Einleser("C:\\Users\\Sebastian\\Desktop\\test.txt");
-		System.out.println(e.zeilen());
+	public static void main(String args[]) throws ParseException{
+		Einleser e = new Einleser("testFiles/input.txt");
+		System.out.println(e.parsedList);
+		System.out.println(e.parsedList.size());
+		Termin[] t = e.termine();
+		for(Termin elem : t){
+			elem.toString();
+			System.out.println("\n");
+		}
 	}
 	
 	
