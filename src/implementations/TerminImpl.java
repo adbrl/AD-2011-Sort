@@ -51,9 +51,9 @@ public class TerminImpl implements Termin {
 	public String toString(){
 		StringBuffer result = new StringBuffer();
 		result.append("Termin:\n");
-		result.append("\tThema: "+ thema);
-		result.append("\tDatum: "+ String.valueOf(dauer));
-		result.append("\tDauer: "+ datum);
+		result.append("\tThema: "+ thema +"\n");
+		result.append("\tDatum: "+ String.valueOf(dauer) +"\n");
+		result.append("\tDauer: "+ datum +"\n");
 		
 		return result.toString();
 	}

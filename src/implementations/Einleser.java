@@ -9,6 +9,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -64,7 +65,7 @@ public class Einleser {
 		System.out.println(accessMap);
 		
 		DateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.US);
-
+		
 		for(String elem : parsedList){
 			String[] line = elem.split(TRENNER);
 
@@ -73,17 +74,37 @@ public class Einleser {
 										 line[accessMap.get("Thema")]);
 			result.add(t);
 		}
-		return (Termin[]) result.toArray();
-		
+		return (Termin[]) result.toArray(new Termin[0]);
 	}
 	
 	public static void main(String args[]) throws ParseException{
 		Einleser e = new Einleser("testFiles/input.txt");
+		CompareThema com1 = new CompareThema();
+		CompareDate com2 = new CompareDate();
+		CompareDuration com3 = new CompareDuration();
+		
 		System.out.println(e.parsedList);
 		System.out.println(e.parsedList.size());
+		
 		Termin[] t = e.termine();
 		for(Termin elem : t){
-			elem.toString();
+			System.out.println(elem.toString());
+			System.out.println("\n");
+		}
+		
+		System.out.println("Sort by Thema!----------------------------\n");
+		Arrays.sort(t, com2);
+		
+		for(Termin elem : t){
+			System.out.println(elem.toString());
+			System.out.println("\n");
+		}
+		
+		System.out.println("Sort by Date!----------------------------\n");
+		Arrays.sort(t, com1);
+		
+		for(Termin elem : t){
+			System.out.println(elem.toString());
 			System.out.println("\n");
 		}
 	}
