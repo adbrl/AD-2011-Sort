@@ -76,6 +76,12 @@ public class Einleser {
 		
 		String[] init = firstLine.split(TRENNER);
 		
+		if(init.length > 3){
+			System.out.println("Invalid InputFile: Invalid Headline");
+			System.out.println(init);
+			System.exit(0);
+		}
+		
 		int count = 0;
 		for(String elem : init){
 			System.out.println(elem);
