@@ -98,6 +98,10 @@ public class Einleser {
 		return (Termin[]) result.toArray(new Termin[0]);
 	}
 	
+	public List<String> inputList(){
+		return this.parsedList;
+	}
+	
 	/**
 	 * The main method.
 	 *
