@@ -68,7 +68,7 @@ public class Einleser {
 	 * @return the termin[]-Array
 	 * @throws ParseException the parse exception
 	 */
-	public Termin[] termine() throws ParseException{
+	public Termin[] termine(){
 		List<Termin> result = new ArrayList<Termin>();
 		String firstLine = parsedList.get(0);
 		
@@ -85,14 +85,23 @@ public class Einleser {
 		
 		System.out.println(accessMap);
 		
-		DateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.US);
+		DateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.UK);
 		
 		for(String elem : parsedList){
 			String[] line = elem.split(TRENNER);
 
-			Termin t = TerminImpl.create(Integer.parseInt(line[accessMap.get("Dauer")]),
-										 dateFormat.parse(line[accessMap.get("DatumZeit")]),
-										 line[accessMap.get("Thema")]);
+			Termin t = null;
+			try {
+				t = TerminImpl.create(Integer.parseInt(line[accessMap.get("Dauer")]),
+											 dateFormat.parse(line[accessMap.get("DatumZeit")]),
+											 line[accessMap.get("Thema")]);
+			} catch (NumberFormatException e) {
+				System.out.println("Invalid InputFile: Invalid Number Format");
+			} catch (ParseException e) {
+				System.out.println("Invalid InputFile: Unparsable Date Detected");
+				System.out.println("---" +line[accessMap.get("DatumZeit")]+ "---");
+				System.exit(0);
+			}
 			result.add(t);
 		}
 		return (Termin[]) result.toArray(new Termin[0]);
