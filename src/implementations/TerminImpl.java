@@ -68,10 +68,10 @@ public class TerminImpl implements Termin {
 	
 	public String toString(){
 		StringBuffer result = new StringBuffer();
-		result.append("Termin:\n");
-		result.append("\tThema: "+ thema +"\n");
-		result.append("\tDatum: "+ String.valueOf(datum) +"\n");
-		result.append("\tDauer: "+ dauer);
+		result.append("Termin: ");
+		result.append("Thema: "+ thema +" ||");
+		result.append("Datum: "+ String.valueOf(datum) +" ||");
+		result.append("Dauer: "+ dauer);
 		
 		return result.toString();
 	}

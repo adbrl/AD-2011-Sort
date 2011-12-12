@@ -60,6 +60,19 @@ public class Einleser {
 		}
 	}
 	
+	private static void invalidHeadline(String[] s){
+		System.out.println("Invalid InputFile: Invalid Headline");
+		System.out.println(s);
+		System.exit(0);
+	}
+	
+	private static boolean contains(String[] s, String elem){
+		for(String e : s){
+			if(e.equals(elem)) return true;
+		}
+		return false;
+	}
+	
 	/**
 	 * Termine
 	 * 
@@ -77,9 +90,19 @@ public class Einleser {
 		String[] init = firstLine.split(TRENNER);
 		
 		if(init.length > 3){
-			System.out.println("Invalid InputFile: Invalid Headline");
-			System.out.println(init);
-			System.exit(0);
+			invalidHeadline(init);
+		}
+		
+		if(!contains(init,"Dauer")){
+			invalidHeadline(init);
+		}
+		
+		if(!contains(init,"Thema")){
+			invalidHeadline(init);
+		}
+		
+		if(!contains(init,"DatumZeit")){
+			invalidHeadline(init);
 		}
 		
 		int count = 0;
@@ -103,6 +126,8 @@ public class Einleser {
 											 line[accessMap.get("Thema")]);
 			} catch (NumberFormatException e) {
 				System.out.println("Invalid InputFile: Invalid Number Format");
+				System.out.println("---" +line[accessMap.get("Dauer")]+ "---");
+				System.exit(0);
 			} catch (ParseException e) {
 				System.out.println("Invalid InputFile: Unparsable Date Detected");
 				System.out.println("---" +line[accessMap.get("DatumZeit")]+ "---");

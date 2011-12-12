@@ -42,21 +42,25 @@ public class Application {
 		comMap.put(2, com2);
 		comMap.put(3, com3);
 		
-		System.out.print("Enter the sorting order [1,2,3], [3,1,2] etc. where 1=Subject, 2=Date, 3=Duration: ");
+		Termin[] t = e.termine();
 		
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		
-		String order = null;
-		
-		try {
-	         order = br.readLine();
-	      } catch (IOException ioe) {
-	         System.out.println("IO error trying to read your order!");
-	         System.exit(1);
-	      }
-	      
-	    orders = getOrder(order);
-	    sortBy(orders, e.termine(), comMap);
+		while(true){
+			System.out.print("Enter the sorting order [1,2,3], [3,1,2] etc. where 1=Subject, 2=Date, 3=Duration or exit: ");
+			
+			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+			
+			String order = null;
+			
+			try {
+		         order = br.readLine();
+		      } catch (IOException ioe){
+		         System.out.println("IO error trying to read your order!");
+		         System.exit(1);
+		      }
+		      
+		    orders = getOrder(order);  //dreht Liste um
+		    sortBy(orders, t, comMap);
+		}
 		
 	}
 	
@@ -74,6 +78,10 @@ public class Application {
 	
 	private static List<Integer> getOrder(String o){
 		List<Integer> result = new ArrayList<Integer>();
+		
+		if(o.equals("exit")){
+			System.exit(0);
+		}
 		
 		String[] splitted = o.split(",");
 		int len = splitted.length - 1;
