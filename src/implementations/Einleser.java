@@ -19,7 +19,7 @@ import java.util.Map;
 public class Einleser {
 	
 
-	public static final String TRENNER = "\\|\\|";
+	public static final String TRENNER = "\\|\\|"; //Zeile 55  beachten!
 	
 	private BufferedReader reader;
 	

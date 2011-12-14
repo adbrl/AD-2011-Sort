@@ -69,10 +69,11 @@ public class Application {
 			Arrays.sort(t, comMap.get(elem));
 		}
 		
-		System.out.println("Sorted: -----------------------------------");
+		System.out.println("Sorted: ------------------------------------------------------------------");
 		for(Termin elem : t){
 			System.out.println(elem);
 		}
+		System.out.println("Sorted: ------------------------------------------------------------------\n");
 		
 	}
 	
