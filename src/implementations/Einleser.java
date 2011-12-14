@@ -85,7 +85,7 @@ public class Einleser {
 		List<Termin> result = new ArrayList<Termin>();
 		String firstLine = parsedList.get(0);
 		
-		System.out.println(firstLine);
+		//System.out.println(firstLine);
 		
 		String[] init = firstLine.split(TRENNER);
 		
@@ -107,12 +107,12 @@ public class Einleser {
 		
 		int count = 0;
 		for(String elem : init){
-			System.out.println(elem);
+			//System.out.println(elem);
 			accessMap.put(elem, count++);
 		}
 		parsedList.remove(0);
 		
-		System.out.println(accessMap);
+		//System.out.println(accessMap);
 		
 		DateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.UK);
 		
