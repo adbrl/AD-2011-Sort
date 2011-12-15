@@ -30,7 +30,7 @@ public class Application {
 	 */
 	public static void main(String[] args) throws ParseException {
 		
-		System.out.print("Please enter path to input file (or 'default'): ");
+		System.out.print("Please enter path to input file (no entry = default): ");
 		
 		BufferedReader bure = new BufferedReader(new InputStreamReader(System.in));
 		
@@ -45,7 +45,7 @@ public class Application {
 		
 		Einleser e;
 		
-		if(input.equals("default")){
+		if(input.equals("")){
 			e = new Einleser("testFiles/input.TXT");
 		}else{
 			e = new Einleser(input);
