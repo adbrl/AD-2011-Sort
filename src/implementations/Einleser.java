@@ -21,6 +21,9 @@ public class Einleser {
 
 	public static final String TRENNER = "\\|\\|"; //Zeile 55  beachten!
 	
+	private int errorCount = 0;
+	private List<String> unparsableList = new ArrayList<String>();
+	
 	private BufferedReader reader;
 	
 	//accessMap to access Thema, Date and Dauer in each line no matter in what order they are
@@ -89,7 +92,9 @@ public class Einleser {
 		
 		String[] init = firstLine.split(TRENNER);
 		
-		if(init.length > 3){
+		
+		
+		if(init.length != 3){
 			invalidHeadline(init);
 		}
 		
@@ -118,23 +123,32 @@ public class Einleser {
 		
 		for(String elem : parsedList){
 			String[] line = elem.split(TRENNER);
-
-			Termin t = null;
-			try {
-				t = TerminImpl.create(Integer.parseInt(line[accessMap.get("Dauer")]),
-											 dateFormat.parse(line[accessMap.get("DatumZeit")]),
-											 line[accessMap.get("Thema")]);
-			} catch (NumberFormatException e) {
-				System.out.println("Invalid InputFile: Invalid Number Format");
-				System.out.println("---" +line[accessMap.get("Dauer")]+ "---");
-				System.exit(0);
-			} catch (ParseException e) {
-				System.out.println("Invalid InputFile: Unparsable Date Detected");
-				System.out.println("---" +line[accessMap.get("DatumZeit")]+ "---");
-				System.exit(0);
+			
+			if(!(line.length != 3)){
+	
+				Termin t = null;
+				try {
+					t = TerminImpl.create(Integer.parseInt(line[accessMap.get("Dauer")]),
+												 dateFormat.parse(line[accessMap.get("DatumZeit")]),
+												 line[accessMap.get("Thema")]);
+				} catch (NumberFormatException e) {
+					System.out.println("Invalid InputFile: Invalid Number Format");
+					System.out.println("---" +line[accessMap.get("Dauer")]+ "---");
+					System.exit(0);
+				} catch (ParseException e) {
+					System.out.println("Invalid InputFile: Unparsable Date Detected");
+					System.out.println("---" +line[accessMap.get("DatumZeit")]+ "---");
+					System.exit(0);
+				}
+				result.add(t);
 			}
-			result.add(t);
+			else{
+				errorCount++;
+				unparsableList.add(elem);
+			}
 		}
+		System.out.println("File read. There were "+errorCount+" unparsable lines");
+		System.out.println("Unparsable lines: "+unparsableList);
 		return (Termin[]) result.toArray(new Termin[0]);
 	}
 	

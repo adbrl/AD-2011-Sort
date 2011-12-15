@@ -29,7 +29,29 @@ public class Application {
 	 * @throws ParseException 
 	 */
 	public static void main(String[] args) throws ParseException {
-		Einleser e = new Einleser("testFiles/input.txt");
+		
+		System.out.print("Please enter path to input file: ");
+		
+		BufferedReader bure = new BufferedReader(new InputStreamReader(System.in));
+		
+		String input = null;
+		
+		try {
+	         input = bure.readLine();
+	      } catch (IOException ioe){
+	         System.out.println("IO error trying to read your order!");
+	         System.exit(1);
+	      }
+		
+		Einleser e;
+		
+		if(input == null){
+			e = new Einleser("testFiles/input.TXT");
+		}else{
+			e = new Einleser(input);
+		}
+		
+		
 		List<Integer> orders = new ArrayList<Integer>();
 		
 		Comparator<Termin> com1 = new CompareThema();
