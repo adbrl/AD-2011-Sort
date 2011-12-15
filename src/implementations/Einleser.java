@@ -39,7 +39,9 @@ public class Einleser {
 		try {
 			this.reader = new BufferedReader(new FileReader(pfad));
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println("Invalid Path: "+pfad);
+			System.out.println("exited");
+			System.exit(0);
 		}
 		zeilen();
 	}
