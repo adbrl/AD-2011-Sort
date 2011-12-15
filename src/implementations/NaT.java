@@ -17,6 +17,15 @@ public class NaT implements Termin {
 	/* (non-Javadoc)
 	 * @see interfaces.Termin#thema()
 	 */
+	private NaT(){
+		
+	}
+	
+	public static Termin create(){
+		return new NaT();
+	}
+	
+	
 	@Override
 	public String thema() {
 		return "";

@@ -116,6 +116,8 @@ public class Einleser {
 		
 		DateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.UK);
 		
+		dateFormat.setLenient(false);
+		
 		for(String elem : parsedList){
 			String[] line = elem.split(TRENNER);
 
@@ -127,11 +129,13 @@ public class Einleser {
 			} catch (NumberFormatException e) {
 				System.out.println("Invalid InputFile: Invalid Number Format");
 				System.out.println("---" +line[accessMap.get("Dauer")]+ "---");
-				System.exit(0);
+				//System.exit(0);
+				t = NaT.create();
 			} catch (ParseException e) {
 				System.out.println("Invalid InputFile: Unparsable Date Detected");
 				System.out.println("---" +line[accessMap.get("DatumZeit")]+ "---");
-				System.exit(0);
+				//System.exit(0);
+				t = NaT.create();
 			}
 			result.add(t);
 		}
@@ -152,7 +156,7 @@ public class Einleser {
 		Einleser e = new Einleser("testFiles/input.txt");
 		CompareThema com1 = new CompareThema();
 		CompareDate com2 = new CompareDate();
-		CompareDuration com3 = new CompareDuration();
+		//CompareDuration com3 = new CompareDuration();
 		
 		System.out.println(e.parsedList);
 		System.out.println(e.parsedList.size());
