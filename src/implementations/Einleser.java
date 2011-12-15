@@ -21,9 +21,6 @@ public class Einleser {
 
 	public static final String TRENNER = "\\|\\|"; //Zeile 55  beachten!
 	
-	private int errorCount = 0;
-	private List<String> unparsableList = new ArrayList<String>();
-	
 	private BufferedReader reader;
 	
 	//accessMap to access Thema, Date and Dauer in each line no matter in what order they are
@@ -87,65 +84,44 @@ public class Einleser {
 	public Termin[] termine(){
 		List<Termin> result = new ArrayList<Termin>();
 		String firstLine = parsedList.get(0);
-		
+
 		//System.out.println(firstLine);
-		
+
 		String[] init = firstLine.split(TRENNER);
-		
-		
-		
-		if(init.length != 3){
+
+		if(init.length > 3){
 			invalidHeadline(init);
 		}
-		
+
 		if(!contains(init,"Dauer")){
 			invalidHeadline(init);
 		}
-		
+
 		if(!contains(init,"Thema")){
 			invalidHeadline(init);
 		}
-		
+
 		if(!contains(init,"DatumZeit")){
 			invalidHeadline(init);
 		}
-		
+
 		int count = 0;
 		for(String elem : init){
 			//System.out.println(elem);
 			accessMap.put(elem, count++);
 		}
 		parsedList.remove(0);
-		
+
 		//System.out.println(accessMap);
-		
+
 		DateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.UK);
-		
+
 		dateFormat.setLenient(false);
-		
+
 		for(String elem : parsedList){
 			String[] line = elem.split(TRENNER);
-<<<<<<< HEAD
-
-			Termin t = null;
-			try {
-				t = TerminImpl.create(Integer.parseInt(line[accessMap.get("Dauer")]),
-											 dateFormat.parse(line[accessMap.get("DatumZeit")]),
-											 line[accessMap.get("Thema")]);
-			} catch (NumberFormatException e) {
-				System.out.println("Invalid InputFile: Invalid Number Format");
-				System.out.println("---" +line[accessMap.get("Dauer")]+ "---");
-				//System.exit(0);
-				t = NaT.create();
-			} catch (ParseException e) {
-				System.out.println("Invalid InputFile: Unparsable Date Detected");
-				System.out.println("---" +line[accessMap.get("DatumZeit")]+ "---");
-				//System.exit(0);
-				t = NaT.create();
-=======
 			
 			if(!(line.length != 3)){
-	
 				Termin t = null;
 				try {
 					t = TerminImpl.create(Integer.parseInt(line[accessMap.get("Dauer")]),
@@ -154,22 +130,17 @@ public class Einleser {
 				} catch (NumberFormatException e) {
 					System.out.println("Invalid InputFile: Invalid Number Format");
 					System.out.println("---" +line[accessMap.get("Dauer")]+ "---");
-					System.exit(0);
+					//System.exit(0);
+					t = NaT.create();
 				} catch (ParseException e) {
 					System.out.println("Invalid InputFile: Unparsable Date Detected");
 					System.out.println("---" +line[accessMap.get("DatumZeit")]+ "---");
-					System.exit(0);
+					//System.exit(0);
+					t = NaT.create();
 				}
 				result.add(t);
 			}
-			else{
-				errorCount++;
-				unparsableList.add(elem);
->>>>>>> bf2189455d50fd3c1e845b3c0b668a81400ac623
-			}
 		}
-		System.out.println("File read. There were "+errorCount+" unparsable lines");
-		System.out.println("Unparsable lines: "+unparsableList);
 		return (Termin[]) result.toArray(new Termin[0]);
 	}
 	
