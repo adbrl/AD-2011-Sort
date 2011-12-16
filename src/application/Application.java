@@ -46,7 +46,7 @@ public class Application {
 		Einleser e;
 		
 		if(input.equals("")){
-			e = new Einleser("testFiles/input.TXT");
+			e = new Einleser("testFiles/test1.txt");
 		}else{
 			e = new Einleser(input);
 		}
@@ -67,7 +67,7 @@ public class Application {
 		Termin[] t = e.termine();
 		
 		while(true){
-			System.out.print("Enter the sorting order [1,2,3], [3,1,2] etc. where 1=Subject, 2=Date, 3=Duration or exit: ");
+			System.out.print("Enter the sorting order <1,2,3>, <3,1,2> etc. where 1=Subject, 2=Date, 3=Duration or exit: ");
 			
 			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 			

@@ -116,7 +116,7 @@ public class Einleser {
 
 		//System.out.println(accessMap);
 
-		DateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.UK);
+		DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.GERMANY);
 
 		dateFormat.setLenient(false);
 
