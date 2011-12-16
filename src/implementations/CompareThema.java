@@ -15,7 +15,7 @@ public class CompareThema implements Comparator<Termin> {
 	 */
 	@Override
 	public int compare(Termin t1, Termin t2) {
-		return t1.thema().compareTo(t2.thema());
+		return t1.thema().toLowerCase().compareTo(t2.thema().toLowerCase());
 	}
 
 }
